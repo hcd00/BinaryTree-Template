@@ -63,36 +63,40 @@ void TreeT<T>::Add(T value)
         return;
     }
 
-    //Set up curr & prev nodes
+    //Set up curr & prev nodes as start points
     Node *currN = root;
     Node *prevN = nullptr;
 
     //traverse tree to find where to place new node.
     while (currN != nullptr)
     {
-        //set up prev node
+        //Update prev Node
         prevN = currN;
 
         //Check which direction to go:
         //Trick: arrow points where to go
-        //Move Left
+
+        //Go into left subtree
         if (value < currN->value)
         {
+            //This is how we are changing direction
             currN = currN->left;
         }
-        //Move Right
+        //Go into right subtree
         else if (value > currN->value)
         {
+            //Change direction to go right
             currN = currN->right;
         }
-        // ??
         else
         {
+            //Need to free up memory if its not used
             delete newNode;
             return;
         }
     }
-    //
+    //Check if new node should be placed on left or right side of the parent
+    //In case this prevN would always be the parent
     if ( value < prevN->value)
     {
         prevN->left = newNode;
